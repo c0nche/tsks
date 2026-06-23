@@ -1,1 +1,1 @@
-TUI task manager
+tsks - crossplatform TUI task manager

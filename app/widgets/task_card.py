@@ -8,7 +8,7 @@ class TaskCard(Static):
     TaskCard {
         layout: vertical;
         width: 30;
-        height: 5;
+        height: auto;
         padding: 1;
         border: solid $panel;
         margin: 1 2;

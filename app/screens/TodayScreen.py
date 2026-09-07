@@ -1,7 +1,7 @@
 from textual.screen import Screen
 from textual.app import ComposeResult
 from textual.widgets import Header, Footer
-from textual.containers import VerticalScroll, Horizontal
+from textual.containers import VerticalScroll, HorizontalGroup
 from textual.events import Resize
 
 from ..widgets.task_card import TaskCard
@@ -18,7 +18,7 @@ class TodayScreen(Screen):
         ("enter", "complete_focused", "complete task")
     ]
 
-    CARD_WIDTH = 32
+    CARD_WIDTH = 34
 
     def __init__(self):
         super().__init__()
@@ -48,13 +48,13 @@ class TodayScreen(Screen):
             self.focus_id = -1
             return
         
-        row = Horizontal()
+        row = HorizontalGroup()
         grid.mount(row)
         counter = self.cols
         for task in today_tasks:
             if counter == 0:
                 counter = self.cols
-                row = Horizontal()
+                row = HorizontalGroup()
                 grid.mount(row)
             counter -= 1
             card = TaskCard(task)

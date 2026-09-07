@@ -1,6 +1,6 @@
 import json
-from models import Task, TreeNode
-from datetime import date
+from .models import Task, TreeNode
+from datetime import datetime, date
 from platformdirs import user_data_dir
 from pathlib import Path
 
@@ -54,6 +54,7 @@ def complete_task(task_id: str, tasks: list[Task]) -> list[Task]:
         if any(not sub.done for sub in get_subtasks(task_id, tasks)):
             return tasks[:]
     task.done = True;
+    task.completed_at = date.today()
     if task.parent is not None:
         return update_parent(task.parent, tasks)
     return tasks[:]
@@ -71,13 +72,13 @@ def add_task(new_task: Task, tasks: list[Task]) -> list[Task]:
     return tasks + [new_task]
 
 def save(tasks: list[Task]):
-    with open(DATA_FILE, "w", "utf-8") as f:
+    with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump([t.to_dict() for t in tasks], f, indent=2, ensure_ascii=False)
 
 def load() -> list[Task]:
-    if not DATA_FILE.exist():
+    if not DATA_FILE.exists():
         return []
     else:
-        with open(DATA_FILE, "r", "utf-8") as f:
+        with open(DATA_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
         return[Task.from_dict(item) for item in data]
